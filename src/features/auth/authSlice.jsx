@@ -3,16 +3,23 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const login = createAsyncThunk("auth/login", async (userData) => {
-  const response = await axios.post("http://localhost:3000/auth", userData, {
-    withCredentials: true, // Include credentials
-  });
+  const response = await axios.post(
+    "https://realestate-server-h42u.onrender.com/auth",
+    userData,
+    {
+      withCredentials: true, // Include credentials
+    }
+  );
   return response.data;
 });
 
 export const logOut = createAsyncThunk("auth/logout", async () => {
-  const response = await axios.post("http://localhost:3000/logout", {
-    withCredentials: true,
-  });
+  const response = await axios.post(
+    "https://realestate-server-h42u.onrender.com/logout",
+    {
+      withCredentials: true,
+    }
+  );
   return response;
 });
 

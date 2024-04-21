@@ -52,9 +52,26 @@ export const postSlice = apiSlice.injectEndpoints({
       },
       providesTags: ["popular"],
     }),
-    addSearchPosts: builder.mutation({
-      query(body) {
-        return { url: "post", method: "POST", body };
+    addSearchPosts: builder.query({
+      query: ({ start, type, furnished, offer, parking }) =>
+        `/post/${start}/${type}/${offer}/${furnished}/${parking}`,
+      transformResponse: (resData) => {
+        const dataArray = resData.data;
+        const imageArray = dataArray.map((data) => {
+          const blob = new Blob([new Uint8Array(data)], {
+            type: "image/png",
+          });
+          const imageUrl = URL.createObjectURL(blob);
+          return imageUrl;
+        });
+        let transformedData = {};
+        let foundPosts = resData.foundPost;
+        for (let i = 0; i < imageArray.length; i++) {
+          foundPosts[i].image = imageArray[i];
+        }
+        transformedData.foundPosts = foundPosts;
+        console.log(transformedData);
+        return transformedData;
       },
     }),
     getPosById: builder.query({
@@ -122,7 +139,7 @@ export const postSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetPopularQuery,
-  useAddSearchPostsMutation,
+  useAddSearchPostsQuery,
   useGetPosByIdQuery,
   useGetPostCommentsQuery,
   useAddPostCommentMutation,

@@ -134,6 +134,16 @@ export const postSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    addPost: builder.mutation({
+      query(formData) {
+        return {
+          url: "/create-listing",
+          method: "POST",
+          body: formData,
+        };
+      },
+      invalidatesTags: [{ type: "userPost", id: "LIST" }],
+    }),
   }),
 });
 
@@ -143,4 +153,5 @@ export const {
   useGetPosByIdQuery,
   useGetPostCommentsQuery,
   useAddPostCommentMutation,
+  useAddPostMutation,
 } = postSlice;

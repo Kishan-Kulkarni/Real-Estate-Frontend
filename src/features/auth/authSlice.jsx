@@ -9,6 +9,13 @@ export const login = createAsyncThunk("auth/login", async (userData) => {
   return response.data;
 });
 
+export const logOut = createAsyncThunk("auth/logout", async () => {
+  const response = await axios.post("http://localhost:3000/logout", {
+    withCredentials: true,
+  });
+  return response;
+});
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -50,6 +57,20 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(logOut.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(logOut.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.token = null;
+        state.user = null;
+        state.error = null;
+        state.id = null;
+      })
+      .addCase(logOut.rejected, (state, action) => {
+        state.error = action.payload;
+        state.status = "failed";
       });
   },
 });

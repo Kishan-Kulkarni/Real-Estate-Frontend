@@ -39,6 +39,15 @@ export const userApiSlice = apiSlice.injectEndpoints({
         { type: "userComments", id: "LIST" },
       ],
     }),
+    registerUser: builder.mutation({
+      query(formData) {
+        return {
+          url: "/register",
+          method: "POST",
+          body: formData,
+        };
+      },
+    }),
   }),
 });
 
@@ -46,4 +55,5 @@ export const {
   useGetUserQuery,
   useGetUserPostsQuery,
   useGetUserCommentsQuery,
+  useRegisterUserMutation,
 } = userApiSlice;

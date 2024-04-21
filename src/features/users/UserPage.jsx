@@ -8,8 +8,13 @@ import {
 import { useEffect, useState } from "react";
 import Cards from "../../components/component/Cards";
 import Comments from "../../components/component/Comments";
+import { logOut } from "../auth/authSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const UserPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [showUserPost, setShowUserPost] = useState(false);
   const [showUserComments, setShowUserComments] = useState(false);
@@ -39,6 +44,15 @@ const UserPage = () => {
   };
   const handleCommentsClick = () => {
     setShowUserComments((prev) => !prev);
+  };
+  const handleLogout = () => {
+    try {
+      dispatch(logOut());
+    } catch (error) {
+      window.alert(error.message);
+    } finally {
+      navigate("/");
+    }
   };
   return (
     <div id="user-container">
@@ -81,6 +95,18 @@ const UserPage = () => {
         ) : (
           <></>
         )}
+      </div>
+      <div id="user-logout" style={{ marginBottom: "20px" }}>
+        <button onClick={() => handleLogout()}>Logout</button>
+      </div>
+      <div id="new-post">
+        <button
+          onClick={() => {
+            navigate("/new-post");
+          }}
+        >
+          New Post
+        </button>
       </div>
     </div>
   );

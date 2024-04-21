@@ -9,6 +9,7 @@ import SignUp from "./components/pages/SignUp";
 import Listing from "./components/pages/Listing";
 import Layout from "./components/pages/Layout";
 import SearchPage from "./features/post/SearchPage";
+import NewPost from "./features/post/NewPost";
 
 function App({ persistor }) {
   return (
@@ -27,6 +28,7 @@ function App({ persistor }) {
             <Route path="/listing/:id" element={<Listing />}></Route>
             <Route element={<RequireAuth />}>
               <Route path="user/:id" element={<UserPage />}></Route>
+              <Route path="new-post" element={<NewPost />}></Route>
             </Route>
           </Route>
         </Routes>

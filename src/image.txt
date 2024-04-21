@@ -1,0 +1,10 @@
+const [img, setImg]=useState([])
+  useEffect(()=>{
+    const temp=async ()=>{
+      const result=await axios.get('http://localhost:3000/popular')
+      const blob=new Blob([new Uint8Array(result.data.popularPosts.data[0])], {type:'image/png'})
+      const imageUrl = URL.createObjectURL(blob)
+      setImg(imageUrl)
+    }
+    temp()
+  }, [])

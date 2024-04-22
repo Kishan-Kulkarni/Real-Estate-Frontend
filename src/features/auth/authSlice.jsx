@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const login = createAsyncThunk("auth/login", async (userData) => {
   const response = await axios.post(
-    "https://realestate-server-h42u.onrender.com/auth",
+    "http://real-estate-prod.ap-south-1.elasticbeanstalk.com/auth",
     userData,
     {
       withCredentials: true, // Include credentials
@@ -15,7 +15,7 @@ export const login = createAsyncThunk("auth/login", async (userData) => {
 
 export const logOut = createAsyncThunk("auth/logout", async () => {
   const response = await axios.post(
-    "https://realestate-server-h42u.onrender.com/logout",
+    "http://real-estate-prod.ap-south-1.elasticbeanstalk.com/logout",
     {
       withCredentials: true,
     }
